@@ -5,5 +5,5 @@ export const NODES_PATH = `${SERVER_PATH}/node`
 
 // query builder for node path
 export const nodePathQueryCreator = (page, filterField, filterType, value) => {
-    return `${NODES_PATH}?page=${page}&fileld=${filterField}&type=${filterType}&value=${value}`
+    return `${NODES_PATH}?page=${page}&field=${filterField}&type=${filterType}&value=${value}`
 }
