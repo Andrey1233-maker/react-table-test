@@ -1,0 +1,23 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+}
+
+.cell {
+    flex: 1;
+    text-align: center;
+
+}
+
+.row_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    background: #4169E1;
+    border-radius: 20px 20px 0 0;
+    color: #ffffff;
+    font-weight: bold;
+}

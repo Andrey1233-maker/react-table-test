@@ -1,0 +1,31 @@
+version: "3"
+services: 
+  server:
+    container_name: test_server
+    build: server/
+    command: npm run start
+    restart: on-failure
+    ports: 
+      - 5000:5000
+    depends_on:
+      - postgres
+  client:
+    container_name: test_client 
+    build: table/
+    command: npm run start
+    restart: on-failure
+    ports: 
+      - 3000:3000
+    depends_on:
+    - server
+  postgres:
+    container_name: test_postgres
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 6432:5432
+    restart: always
