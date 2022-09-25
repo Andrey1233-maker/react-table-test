@@ -1,0 +1,33 @@
+.error_box {
+    position: absolute;
+    margin: auto;
+    align-self: center;
+
+    background: #ffe5b4;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.error_box__text{
+    font-size: 20px;
+    font-weight: bold;
+    color: #B00000;
+}
+
+.error_box__btn{
+    background: #ffe5b4;
+    border-radius: 20px;
+    border: 2px solid #B00000;
+    color: #B00000;
+    padding: 20px 40px;
+}
+
+.error_box__btn:hover {
+    background: #B00000;
+    color: #ffe5b4;
+}

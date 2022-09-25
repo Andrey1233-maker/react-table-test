@@ -1,14 +1,15 @@
 import { call, put } from "redux-saga/effects";
 import { getNodes } from "../../../api/requests/getNodes";
-import { setNodesToReduxActionCreator } from "../../action/actionCreators";
+import { setErrorActionCreator, setNodesToReduxActionCreator } from "../../action/actionCreators";
 
 
-export function* workerGetNodesSaga() {
+export function* workerGetNodesSaga(action) {
     try{
-        const nodes = yield call(getNodes)
+        const nodes = yield call(getNodes, action)
         yield put(setNodesToReduxActionCreator(nodes))
     }
     catch(e) {
-        console.error('flkshdlfhkjsdfhk')
+        yield put(setErrorActionCreator('Записи не загружены'))
+        console.error(e)
     }
 }

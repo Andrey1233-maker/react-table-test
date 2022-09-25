@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fieldEnum, typesEnum } from "../../const";
 import { requestNodesFromServerActionCreator } from "../../redux/action/actionCreators";
 import { nodesFromTableSelector } from "../../redux/selectors";
 import { Row } from '../Row/Row';
@@ -12,7 +13,7 @@ export function Table() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(requestNodesFromServerActionCreator())
+        dispatch(requestNodesFromServerActionCreator(1, fieldEnum.NONE, typesEnum.NONE, ''))
     }, [dispatch])
 
     return (

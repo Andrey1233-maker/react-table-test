@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { NODES_PATH } from '../apiPath';
+import { nodePathQueryCreator } from '../apiPath';
 
-export async function getNodes() {
+export async function getNodes(action) {
     try{
-        const nodes = (await axios.get(NODES_PATH)).data
+        const nodes = (await axios.get(nodePathQueryCreator(action.page, action.field, action.typeFilter, action.value))).data
         return nodes
     }
     catch(e) {
