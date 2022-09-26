@@ -1,4 +1,4 @@
-
+// types of filter condition
 export const typesEnum = {
     NONE: 0,
     LESS: 1,
@@ -6,6 +6,7 @@ export const typesEnum = {
     BIGGER: 3,
 }
 
+// types of filtered field
 export const fieldEnum = {
     NONE: 0,
     TITLE: 1,

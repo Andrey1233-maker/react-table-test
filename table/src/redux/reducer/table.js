@@ -1,10 +1,11 @@
 import { fieldEnum, typesEnum } from "../../const";
 import { SET_ERROR_ACTION, SET_NODES_TO_REDUX_ACTION, UNSET_ERROR_ACTION } from "../action/actionTypes";
 
+// initial states for table
 const init = {
     nodes: [],
-    pageCurrent: 2,
-    pageCount: 5,
+    pageCurrent: 0,
+    pageCount: 0,
     type: typesEnum.NONE,
     field: fieldEnum.NONE,
     value: '',

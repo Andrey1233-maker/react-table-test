@@ -1,8 +1,7 @@
 const db = require('../db')
-const { countNodesOnPage } = require('../consts')
-const { typesEnum, fieldEnum } = require('../const')
+const { typesEnum, fieldEnum, countNodesOnPage } = require('../const')
 
-
+// selector for request to DB
 const getNodes = async (page, type, field, value) => {
     try {
         if(typesEnum.LESS === Number(type) && fieldEnum.COUNT === Number(field)){
@@ -45,6 +44,7 @@ const getNodes = async (page, type, field, value) => {
     }
 }
 
+// node creator
 const createNode = async (title, count, leight, date) => {
     try{
         const newNode = await (await db.query(`INSERT INTO nodes(title, count, leight, date) VALUES('${title}', ${count}, ${leight}, '${date}');`)).rows[0]

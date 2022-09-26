@@ -10,6 +10,6 @@ export function* workerGetNodesSaga(action) {
     }
     catch(e) {
         yield put(setErrorActionCreator('Записи не загружены'))
-        console.error(e)
+        throw e
     }
 }

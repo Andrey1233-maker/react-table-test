@@ -1,9 +1,10 @@
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { unsetErrorActionCreator } from "../../redux/action/actionCreators";
-import { errorFromTableSelector } from "../../redux/selectors";
+import { useCallback } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-import './errorBox.css';
+import { unsetErrorActionCreator } from "../../redux/action/actionCreators"
+import { errorFromTableSelector } from "../../redux/selectors"
+
+import './errorBox.css'
 
 export function ErrorBox() {
 

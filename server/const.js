@@ -1,3 +1,4 @@
+const countNodesOnPage = 10
 
 const typesEnum = {
     NONE: 0,
@@ -13,4 +14,4 @@ const fieldEnum = {
     COUNT: 3,
 }
 
-module.exports = { typesEnum, fieldEnum }
+module.exports = { typesEnum, fieldEnum, countNodesOnPage }
