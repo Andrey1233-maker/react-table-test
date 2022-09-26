@@ -29,8 +29,26 @@ const getNodes = async (page, type, field, value) => {
             const nodes = await getNodesWithFilterBiggerLeight(value, page)
             return nodes
         }
+        if(typesEnum.EQUAL === Number(type) && fieldEnum.TITLE === Number(field)) {
+            const nodes = await getNodesWithFilterEqualTitle(value, page)
+            return nodes
+        }
+        if((typesEnum.BIGGER === Number(type) || typesEnum.LESS === Number(type)) && fieldEnum.TITLE === Number(field)) {
+            const nodes = await getNodesWithFilterBiggerTitle(value, page)
+            return nodes
+        }
         const nodes = await getNodeWithoutFilter(page)
         return nodes
+    }
+    catch(e) {
+        throw e
+    }
+}
+
+const createNode = async (title, count, leight, date) => {
+    try{
+        const newNode = await (await db.query(`INSERT INTO nodes(title, count, leight, date) VALUES('${title}', ${count}, ${leight}, '${date}');`)).rows[0]
+        return newNode
     }
     catch(e) {
         throw e
@@ -59,8 +77,8 @@ const getNodeWithoutFilter = async (page = 1) => {
         OFFSET ${(page - 1) * countNodesOnPage}
         LIMIT ${countNodesOnPage}
     ;`)
-    const count = await (await db.query(`SELECT * FROM nodes;`)).rowCount
-    return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+    const count = (await db.query(`SELECT * FROM nodes;`)).rows[0].count
+    return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
@@ -75,9 +93,9 @@ const getNodesWithFilterLessCount = async (value, page = 1) => {
             OFFSET ${(page - 1) * countNodesOnPage}
             LIMIT ${countNodesOnPage}
         ;`)
-        const count = await (await db.query(`SELECT * FROM nodes
-            WHERE count < ${value};`)).rowCount
-        return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+        const count = (await db.query(`SELECT * FROM nodes
+            WHERE count < ${value};`)).rows[0].count
+        return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
@@ -92,9 +110,9 @@ const getNodesWithFilterEqualCount = async (value, page = 1) => {
             OFFSET ${(page - 1) * countNodesOnPage}
             LIMIT ${countNodesOnPage}
         ;`)
-        const count = await (await db.query(`SELECT * FROM nodes
-            WHERE count = ${value};`)).rowCount
-    return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+        const count = (await db.query(`SELECT * FROM nodes
+            WHERE count = ${value};`)).rows[0].count
+    return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
@@ -109,9 +127,9 @@ const getNodesWithFilterBiggerCount = async (value, page = 1) => {
             OFFSET ${(page - 1) * countNodesOnPage}
             LIMIT ${countNodesOnPage}
         ;`)
-        const count = await (await db.query(`SELECT * FROM nodes
-            WHERE count > ${value};`)).rowCount
-    return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+        const count = (await db.query(`SELECT * FROM nodes
+            WHERE count > ${value};`)).rows[0].count
+    return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
@@ -126,9 +144,9 @@ const getNodesWithFilterBiggerLeight = async (value, page = 1) => {
             OFFSET ${(page - 1) * countNodesOnPage}
             LIMIT ${countNodesOnPage}
         ;`)
-        const count = await (await db.query(`SELECT * FROM nodes  
-            WHERE leight > ${value};`)).rowCount
-    return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+        const count = (await db.query(`SELECT * FROM nodes  
+            WHERE leight > ${value};`)).rows[0].count
+    return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
@@ -143,9 +161,9 @@ const getNodesWithFilterEqualLeight = async (value, page = 1) => {
             OFFSET ${(page - 1) * countNodesOnPage}
             LIMIT ${countNodesOnPage}
         ;`)
-        const count = await (await db.query(`SELECT * FROM nodes
-            WHERE leight = ${value};`)).rowCount
-    return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+        const count = (await db.query(`SELECT * FROM nodes
+            WHERE leight = ${value};`)).rows[0].count
+    return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
@@ -160,24 +178,52 @@ const getNodesWithFilterLessLeight = async (value, page = 1) => {
             OFFSET ${(page - 1) * countNodesOnPage}
             LIMIT ${countNodesOnPage}
         ;`)
-        const count = await (await db.query(`SELECT * FROM nodes
-            WHERE leight < ${value};`)).rowCount
-        return {nodes: nodes.rows, countPage: Math.floor(count / countNodesOnPage)}
+        const count = (await db.query(`SELECT * FROM nodes
+            WHERE leight < ${value};`)).rows[0].count
+        return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
     }
     catch(e) {
         throw e
     }
 }
 
-//
+// return nodes with title as value on page
+const getNodesWithFilterEqualTitle = async (value, page = 1) => {
+    try {
+        const nodes = await db.query(`SELECT * FROM nodes
+            WHERE title = '${value}'
+            OFFSET ${(page - 1) * countNodesOnPage}
+            LIMIT ${countNodesOnPage}
+        ;`)
+        const count = (await db.query(`SELECT COUNT(*) FROM nodes
+            WHERE title = '${value}';`)).rows[0].count
+            console.log(count)
+        return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
+    }
+    catch(e) {
+        throw e
+    }
+}
+
+// return nodes with bigger title than value on page
+const getNodesWithFilterBiggerTitle = async (value, page = 1) => {
+    try {
+        const nodes = await db.query(`SELECT * FROM nodes
+            WHERE title LIKE '%${value}%'
+            OFFSET ${(page - 1) * countNodesOnPage}
+            LIMIT ${countNodesOnPage}
+        ;`)
+        const count = (await db.query(`SELECT COUNT(*) FROM nodes
+            WHERE title LIKE '%${value}%';`)).rows[0].count
+            console.log(count)
+        return {nodes: nodes.rows, countPage: Math.floor(Number(count) / countNodesOnPage)}
+    }
+    catch(e) {
+        throw e
+    }
+}
 
 module.exports = {  createNodesTable,
-                    getNodeWithoutFilter, 
-                    getNodesWithFilterLessCount, 
-                    getNodesWithFilterEqualCount, 
-                    getNodesWithFilterBiggerCount,
-                    getNodesWithFilterLessLeight,
-                    getNodesWithFilterEqualLeight,
-                    getNodesWithFilterBiggerLeight,
-                    getNodes 
+                    getNodes,
+                    createNode 
                 }

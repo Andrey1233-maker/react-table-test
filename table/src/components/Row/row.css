@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: center;
     padding: 10px;
-    border-top: #4169E1;
+    border-top: 1px solid #777777;
 }
 
 .cell {
