@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { requestNodesFromServerActionCreator } from '../../redux/action/actionCreators'
+import { requestNodesFromServerActionCreator, setErrorActionCreator } from '../../redux/action/actionCreators'
 import { fieldEnum, typesEnum } from "../../const";
 import './filter.css'
 
@@ -13,6 +13,10 @@ export function Filter() {
     const [value, setValue] = useState('')
 
     const onClick = useCallback(() => {
+        if(value === ''){
+            dispatch(setErrorActionCreator('Значение не должно быть пустым'))
+            return
+        }
         dispatch(requestNodesFromServerActionCreator(1, field, type, value))
     }, [dispatch, field, type, value])
 

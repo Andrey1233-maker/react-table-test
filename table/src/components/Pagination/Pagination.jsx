@@ -17,7 +17,7 @@ export function Pagination() {
     const pageListCreator = () => {
         const pages = []
         for(let i = 1; i <= pageCount; ++i) {
-            pages.push((pageCurrent === i) ? (<div onClick={() => changePage(i)} className='page_active page'>{i}</div>) : (<div className='page'>{i}</div>))
+            pages.push((Number(pageCurrent) === i) ? (<div onClick={() => changePage(i)} className='page_active page'>{i}</div>) : (<div onClick={() => changePage(i)} className='page'>{i}</div>))
         }   
         return pages
     }
@@ -26,7 +26,7 @@ export function Pagination() {
         <div className='pagination'>
             <img onClick={() => changePage(pageCurrent - 1)} className='arrow' src={arrow} alt="previos" />
             {pageListCreator()}
-            <img onClick={() => changePage(pageCurrent + 1)} className='right_arrow arrow' src={arrow} alt="next" />
+            <img onClick={() => changePage(Number(pageCurrent) + 1)} className='right_arrow arrow' src={arrow} alt="next" />
         </div>
     )
 }

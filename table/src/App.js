@@ -15,7 +15,7 @@ function App() {
       <Filter />
       <Table className="table" />
       <Pagination />
-      <ErrorBox />
+      <ErrorBox className="error" />
     </div>
   );
 }

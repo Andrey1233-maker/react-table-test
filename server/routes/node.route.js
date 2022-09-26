@@ -1,5 +1,4 @@
 const { Router } = require('express')
-const { countNodesOnPage } = require('../consts')
 const { getNodes } = require('../servises/node.service')
 
 const router = Router()
@@ -9,6 +8,7 @@ router.get('/', async (req, res) => {
     try {
         const { page, type, field, value } = req.query
         const nodes = await getNodes(page, type, field, value)
+        console.log({ ...nodes, currentPage: page, type, field, value })
         res.status(200).json({ ...nodes, currentPage: page, type, field, value })
     }
     catch(e) {

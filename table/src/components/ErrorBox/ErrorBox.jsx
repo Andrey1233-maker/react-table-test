@@ -16,9 +16,11 @@ export function ErrorBox() {
 
     if(error) {
         return (
-            <div className="error_box">
-                <p className="error_box__text">{error}</p>
-                <button className="error_box__btn" onClick={onClick}>Понятно</button>
+            <div className="background__error">
+                <div className="error_box">
+                    <p className="error_box__text">{error}</p>
+                    <button className="error_box__btn" onClick={onClick}>Понятно</button>
+                </div>
             </div>
         )
     }
